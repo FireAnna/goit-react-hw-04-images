@@ -1,47 +1,38 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Modal.module.css'
 
 
-class Modal extends Component {
- 
+const Modal = ({closeModal, imgData, imgAlt}) => {
 
-  handleOverlayClick = (evt) => {
+const handleOverlayClick = (evt) => {
     const overlay = evt.currentTarget;
     if (evt.target === overlay) {
-      this.props.closeModal();
+      closeModal();
     }
   }
 
-  handleEcsapeKey = (evt) => {
+  const handleEcsapeKey = (evt) => {
     if (evt.key === "Escape") {
-      this.props.closeModal();
+    closeModal();
     }
   }
 
-  componentDidMount() {
-    document.addEventListener("keydown", this.handleEcsapeKey);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleEcsapeKey);
-  }
+  useEffect(() => {
+    document.removeEventListener("keydown", handleEcsapeKey);
+  })
   
-  render() {
-    const {imgData} = this.props;
-    const {src, alt} = imgData;
-
     return (
-      <div className={css.overlay} onClick={this.handleOverlayClick}>
+          <div className={css.overlay} onClick={handleOverlayClick}>
         <div className={css.modal}>
-          <img src={src} alt={alt} />
+          <img src={imgData} alt={imgAlt} />
         </div>
       </div>
     )
   }
-}
 
- Modal.propTypes = {
+
+Modal.propTypes = {
     closeModal: PropTypes.func.isRequired,
     imgData: PropTypes.objectOf(PropTypes.string),
   }
