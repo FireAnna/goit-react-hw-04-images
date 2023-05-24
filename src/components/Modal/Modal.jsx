@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Modal.module.css'
 
@@ -19,7 +19,7 @@ const handleOverlayClick = (evt) => {
   }
 
   useEffect(() => {
-    document.removeEventListener("keydown", handleEcsapeKey);
+    document.addEventListener("keydown", handleEcsapeKey);
   })
   
     return (
